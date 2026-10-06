@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sara Ghaleb Azab Ghaleb — AI & Machine Learning Engineer. Immersive 3D portfolio showcasing intelligent solutions, ML projects, and data analytics." />
+  <title>Sara Ghaleb — AI &amp; Machine Learning Engineer</title>
+
+  <!-- ══ Premium Typography: Orbitron · Space Grotesk · DM Sans ══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <!-- ══ 3D & Animation Libraries ══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+
+  <!-- ══ Stylesheet ══ -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- ══ Noscript: ensure all content visible without JS ══ -->
+  <noscript>
+    <style>
+      .loader { display: none !important; }
+      .reveal, .gsap-fade { opacity: 1 !important; transform: none !important; }
+      body.sg-anim .reveal, body.sg-anim .gsap-fade { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     LOADING SCREEN
+════════════════════════════════════════════════ -->
+<div class="loader" id="loader" role="status" aria-label="Loading Sara Ghaleb AI Portfolio">
+  <div class="loader-inner">
+    <div class="loader-logo">SG<span>.</span></div>
+    <div class="loader-ring" aria-hidden="true"></div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loaderBar"></div>
+    </div>
+    <p class="loader-status" id="loaderStatus">Initializing AI World&hellip;</p>
+  </div>
+  <div class="loader-grid" aria-hidden="true"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CUSTOM CURSOR
+════════════════════════════════════════════════ -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- ════════════════════════════════════════════════
+     THREE.JS CANVAS — AI DIGITAL OCEAN WORLD
+════════════════════════════════════════════════ -->
+<canvas class="three-canvas" id="threeCanvas" aria-hidden="true"></canvas>
+
+<!-- ════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <!-- Logo -->
+    <a href="#hero" class="nav-logo" aria-label="Sara Ghaleb — back to top">
+      SG<span class="accent-dot">.</span>
+    </a>
+
+    <!-- Nav Links -->
+    <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+      <a href="#about"      class="nav-link" data-sec="about">About</a>
+      <a href="#skills"     class="nav-link" data-sec="skills">Skills</a>
+      <a href="#projects"   class="nav-link" data-sec="projects">Projects</a>
+      <a href="#experience" class="nav-link" data-sec="experience">Experience</a>
+      <a href="#services"      class="nav-link" data-sec="services">Services</a>
+      <a href="#certificates"  class="nav-link" data-sec="certificates">Certificates</a>
+      <a href="#contact"       class="nav-link" data-sec="contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <!-- Theme -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light / dark mode">
+        <span class="icon-sun" aria-hidden="true">☀</span>
+        <span class="icon-moon" aria-hidden="true">◑</span>
+      </button>
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger"
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════ -->
+<main>
+
+<!-- ─────────────────────── HERO ─────────────────────── -->
+<section class="hero" id="hero">
+
+  <!-- HUD frame corners -->
+  <div class="hud-frame" aria-hidden="true">
+    <span class="hud-c tl"></span><span class="hud-c tr"></span>
+    <span class="hud-c bl"></span><span class="hud-c br"></span>
+    <span class="hud-scan"></span>
+  </div>
+
+  <!-- Coordinate display (decorative) -->
+  <div class="hud-coords" aria-hidden="true">
+    <span class="coord-item">LAT 30.0626° N</span>
+    <span class="coord-sep">|</span>
+    <span class="coord-item">LON 31.2497° E</span>
+    <span class="coord-sep">|</span>
+    <span class="coord-item" id="coordTime">00:00 UTC</span>
+  </div>
+
+  <div class="hero-content" id="heroContent">
+
+    <!-- Status badge -->
+    <div class="hero-badge gsap-fade">
+      <span class="badge-pulse" aria-hidden="true"></span>
+      <span>System Online</span>
+      <span class="badge-sep" aria-hidden="true">|</span>
+      <span>Open to Opportunities</span>
+    </div>
+
+    <!-- Name (Orbitron) -->
+    <h1 class="hero-name gsap-fade">
+      <span class="name-line-1">Sara <span class="name-accent">Ghaleb</span></span>
+      <span class="name-line-2">Azab Ghaleb</span>
+    </h1>
+
+    <!-- Animated role -->
+    <div class="hero-role gsap-fade" aria-label="AI & Machine Learning Engineer">
+      <span class="role-dash" aria-hidden="true">&mdash;&nbsp;</span>
+      <span class="role-typed" id="roleText" aria-live="polite"></span>
+      <span class="role-caret" aria-hidden="true">|</span>
+    </div>
+
+    <!-- Intro paragraph -->
+    <p class="hero-intro gsap-fade">
+      Passionate about building <em>end-to-end intelligent solutions</em> —
+      from complex data pipelines and predictive models to interactive,
+      production-ready applications that drive real-world decisions.
+    </p>
+
+    <!-- CTAs -->
+    <div class="hero-cta gsap-fade">
+      <a href="#projects" class="btn btn-primary">
+        <span class="btn-sweep" aria-hidden="true"></span>
+        <span>View Projects</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="#contact" class="btn btn-ghost">Contact Me</a>
+      <a href="https://github.com/engsarona" target="_blank" rel="noopener noreferrer"
+         class="btn btn-icon" aria-label="GitHub profile">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+             width="18" height="18" aria-hidden="true">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Socials -->
+    <div class="hero-socials gsap-fade">
+      <a href="https://github.com/engsarona" target="_blank" rel="noopener noreferrer"
+         class="social-pill" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+             width="16" height="16" aria-hidden="true">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/sara-ghaleb-929b49352" target="_blank" rel="noopener noreferrer"
+         class="social-pill" aria-label="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+             width="16" height="16" aria-hidden="true">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a href="mailto:sartghalb13@gmail.com" class="social-pill" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        Email
+      </a>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint gsap-fade" aria-hidden="true">
+      <span class="sh-dot"></span>
+      <span>Scroll to explore the AI World</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Minimap -->
+  <div class="minimap" aria-hidden="true">
+    <p class="mm-title">AI WORLD</p>
+    <div class="mm-nodes">
+      <span class="mm-node active" title="Origin"></span>
+      <span class="mm-node" title="About"></span>
+      <span class="mm-node" title="Skills"></span>
+      <span class="mm-node" title="Projects"></span>
+      <span class="mm-node" title="Experience"></span>
+      <span class="mm-node" title="Contact"></span>
+    </div>
+  </div>
+
+  <!-- ── MASCOT: Hero — Floating companion ── -->
+  <div class="mascot-widget" id="mascotWidget" aria-label="Sara's AI mascot companion">
+    <div class="mascot-speech" id="mascotSpeech">
+      <span id="mascotMsg">Small Steps, Big Models! 🚀</span>
+      <div class="speech-tail" aria-hidden="true"></div>
+    </div>
+    <div class="mascot-img-wrap" id="mascotImgWrap">
+      <img src="img/mascot.jpg"
+           alt="Sara's chibi AI mascot — sitting at laptop with Machine Learning, Data Science, Python books"
+           class="mascot-img" id="mascotImg"
+           draggable="false" />
+      <div class="mascot-glow-ring" aria-hidden="true"></div>
+    </div>
+    <div class="mascot-status" id="mascotStatus" aria-hidden="true">
+      <span class="ms-dot"></span>
+      <span class="ms-label">AI Mode Active</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ─────────────────────── ABOUT ─────────────────────── -->
+<section class="section about-sec" id="about">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 01 — ORIGIN</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">Who I Am</span>
+      <h2 class="sec-title">About <span class="grad-text">Me</span></h2>
+      <p class="sec-sub">The mind architecting the intelligence</p>
+    </header>
+
+    <div class="about-grid">
+
+      <!-- Mascot: About — thinking pose inline -->
+      <div class="mascot-inline about-mascot reveal" data-d="0" aria-hidden="true">
+        <img src="img/mascot.jpg" alt="" class="mascot-inline-img mascot-think" />
+        <div class="mascot-inline-bubble">
+          Curious about AI &amp; data! 🧠
+        </div>
+      </div>
+
+      <!-- Avatar column -->
+      <div class="about-avatar reveal">
+        <div class="av-scene">
+          <div class="av-ring r1" aria-hidden="true"></div>
+          <div class="av-ring r2" aria-hidden="true"></div>
+          <div class="av-ring r3" aria-hidden="true"></div>
+          <div class="av-core">
+            <div class="av-initials">SG</div>
+            <div class="av-glow" aria-hidden="true"></div>
+          </div>
+          <div class="av-orbit" aria-hidden="true">
+            <span class="or-node" style="--a:0deg" title="Machine Learning">🤖</span>
+            <span class="or-node" style="--a:120deg" title="Data Analytics">📊</span>
+            <span class="or-node" style="--a:240deg" title="AI Systems">🧠</span>
+          </div>
+        </div>
+
+        <div class="av-info">
+          <div class="av-info-row">
+            <span aria-hidden="true">📍</span>
+            <span>Beni Suef, Egypt</span>
+          </div>
+          <div class="av-info-row">
+            <span aria-hidden="true">🎓</span>
+            <span>CS &amp; AI Student</span>
+          </div>
+          <div class="av-info-row">
+            <span aria-hidden="true">⚡</span>
+            <span>Open to Opportunities</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text column -->
+      <div class="about-text reveal">
+        <div class="glass-card about-card">
+          <p class="about-lead">
+            Computer Science &amp; Artificial Intelligence student at
+            <strong>Nahda University, Beni Suef</strong>, enrolled in the
+            <strong>Digital Egypt Pioneers Initiative</strong>
+            (Microsoft Machine Learning Engineer track).
+          </p>
+          <p>
+            I focus on transforming raw, complex datasets into actionable insights through
+            robust preprocessing pipelines, predictive modeling, and interactive dashboards.
+            My work spans the full ML lifecycle — from data wrangling and feature engineering
+            to model evaluation and production deployment via Streamlit.
+          </p>
+          <p>
+            Driven by algorithmic precision and a commitment to continuous learning, I build
+            high-impact technological solutions that bridge the gap between raw data and
+            real-world decisions.
+          </p>
+          <div class="chip-cloud">
+            <span class="chip">Python</span>
+            <span class="chip">Scikit-Learn</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">Streamlit</span>
+            <span class="chip">Machine Learning</span>
+            <span class="chip">EDA</span>
+            <span class="chip">Feature Engineering</span>
+            <span class="chip">Predictive Modeling</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── SKILLS ─────────────────────── -->
+<section class="section skills-sec" id="skills">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 02 — ARSENAL</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">Expertise</span>
+      <h2 class="sec-title">Skills &amp; <span class="grad-text">Technologies</span></h2>
+      <p class="sec-sub">The tools powering intelligent solutions</p>
+    </header>
+
+    <div class="skills-grid">
+
+      <!-- ML & Programming -->
+      <article class="glass-card skill-card reveal" data-d="0">
+        <div class="sc-accent" aria-hidden="true"></div>
+        <div class="sc-head">
+          <div class="sc-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+              <path d="M2 12h20"/>
+            </svg>
+          </div>
+          <h3>ML &amp; Programming</h3>
+        </div>
+        <ul class="bar-list">
+          <li>
+            <div class="bl-row"><span>Python</span><span class="bl-pct">95%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="95"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Scikit-Learn</span><span class="bl-pct">88%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="88"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Pandas &amp; NumPy</span><span class="bl-pct">85%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="85"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Predictive Modeling</span><span class="bl-pct">82%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="82"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Feature Engineering</span><span class="bl-pct">80%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="80"></div></div>
+          </li>
+        </ul>
+      </article>
+
+      <!-- Data Analytics & BI -->
+      <article class="glass-card skill-card reveal" data-d="130">
+        <div class="sc-accent" aria-hidden="true"></div>
+        <div class="sc-head">
+          <div class="sc-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M3 15h18M9 3v18"/>
+            </svg>
+          </div>
+          <h3>Data Analytics &amp; BI</h3>
+        </div>
+        <ul class="bar-list">
+          <li>
+            <div class="bl-row"><span>EDA</span><span class="bl-pct">90%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="90"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Power BI</span><span class="bl-pct">85%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="85"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Microsoft Excel</span><span class="bl-pct">88%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="88"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>KPI Tracking</span><span class="bl-pct">80%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="80"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Data Preprocessing</span><span class="bl-pct">87%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="87"></div></div>
+          </li>
+        </ul>
+      </article>
+
+      <!-- Tools & Deployment -->
+      <article class="glass-card skill-card reveal" data-d="260">
+        <div class="sc-accent" aria-hidden="true"></div>
+        <div class="sc-head">
+          <div class="sc-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h3>Tools &amp; Deployment</h3>
+        </div>
+        <ul class="bar-list">
+          <li>
+            <div class="bl-row"><span>Streamlit</span><span class="bl-pct">88%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="88"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Git &amp; GitHub</span><span class="bl-pct">82%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="82"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>Jupyter Notebooks</span><span class="bl-pct">85%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="85"></div></div>
+          </li>
+          <li>
+            <div class="bl-row"><span>VS Code</span><span class="bl-pct">80%</span></div>
+            <div class="bl-track"><div class="bl-fill" data-w="80"></div></div>
+          </li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── PROJECTS ─────────────────────── -->
+<section class="section projects-sec" id="projects">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 03 — CREATIONS</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">What I've Built</span>
+      <h2 class="sec-title">Featured <span class="grad-text">Projects</span></h2>
+      <p class="sec-sub">Deployed intelligent systems &amp; data solutions</p>
+    </header>
+
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <article class="glass-card project-card reveal" data-d="0">
+        <div class="pc-num" aria-hidden="true">01</div>
+        <div class="pc-top">
+          <div class="pc-icon" aria-hidden="true"><span>🏨</span></div>
+          <a href="https://github.com/engsarona" target="_blank" rel="noopener noreferrer"
+             class="pc-gh" aria-label="View on GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                 width="14" height="14" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Code
+          </a>
+        </div>
+        <h3 class="pc-title">Hotel Booking Cancellation Prediction</h3>
+        <p class="pc-desc">
+          End-to-end ML solution using <strong>Logistic Regression</strong> and
+          <strong>Random Forest</strong> to forecast booking cancellations with high accuracy.
+          Integrated into a live, interactive <strong>Streamlit</strong> web interface
+          for real-time inference.
+        </p>
+        <div class="pc-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Scikit-Learn</span>
+          <span class="tag">Random Forest</span>
+          <span class="tag">Streamlit</span>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="glass-card project-card reveal" data-d="150">
+        <div class="pc-num" aria-hidden="true">02</div>
+        <div class="pc-top">
+          <div class="pc-icon" aria-hidden="true"><span>📈</span></div>
+          <a href="https://github.com/engsarona" target="_blank" rel="noopener noreferrer"
+             class="pc-gh" aria-label="View on GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                 width="14" height="14" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Code
+          </a>
+        </div>
+        <h3 class="pc-title">End-to-End Analytics &amp; Interactive Dashboards</h3>
+        <p class="pc-desc">
+          Comprehensive <strong>EDA pipelines</strong> combined with custom
+          <strong>Power BI</strong> and <strong>Excel</strong> dashboards for tracking
+          critical KPIs and surfacing business trends that drive strategic decisions.
+        </p>
+        <div class="pc-tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">Excel</span>
+          <span class="tag">EDA</span>
+          <span class="tag">KPI Tracking</span>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="glass-card project-card reveal" data-d="300">
+        <div class="pc-num" aria-hidden="true">03</div>
+        <div class="pc-top">
+          <div class="pc-icon" aria-hidden="true"><span>⚡</span></div>
+          <a href="https://github.com/engsarona" target="_blank" rel="noopener noreferrer"
+             class="pc-gh" aria-label="View on GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                 width="14" height="14" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Code
+          </a>
+        </div>
+        <h3 class="pc-title">Machine Learning Deployment Suite</h3>
+        <p class="pc-desc">
+          A suite of production-ready <strong>Streamlit web applications</strong> serving
+          real-time model inference from custom-trained ML pipelines — bridging the gap
+          between research-grade models and end-user accessibility.
+        </p>
+        <div class="pc-tags">
+          <span class="tag">Streamlit</span>
+          <span class="tag">Python</span>
+          <span class="tag">ML Pipelines</span>
+          <span class="tag">Deployment</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── EXPERIENCE ─────────────────────── -->
+<section class="section exp-sec" id="experience">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 04 — JOURNEY</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">Career History</span>
+      <h2 class="sec-title">My <span class="grad-text">Experience</span></h2>
+      <p class="sec-sub">The path through the AI landscape</p>
+    </header>
+
+    <div class="timeline">
+
+      <!-- DEPI -->
+      <article class="tl-item reveal" data-d="0">
+        <div class="tl-node" aria-hidden="true">
+          <div class="tl-pulse"></div>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-line" aria-hidden="true"></div>
+        <div class="glass-card tl-body">
+          <div class="tl-top">
+            <div>
+              <h3>Machine Learning Trainee</h3>
+              <p class="tl-org">Digital Egypt Pioneers Initiative (DEPI)</p>
+            </div>
+            <span class="tl-badge tl-training">Training</span>
+          </div>
+          <p class="tl-track">
+            AI &amp; Data Science · Microsoft Machine Learning Engineer Track
+          </p>
+          <ul class="tl-bullets">
+            <li>Developed end-to-end ML workflows covering data ingestion, preprocessing, model training, and evaluation.</li>
+            <li>Built robust data processing pipelines and predictive algorithms on real-world datasets.</li>
+            <li>Applied Microsoft ML tooling within structured, industry-aligned curriculum.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ITI -->
+      <article class="tl-item reveal" data-d="120">
+        <div class="tl-node" aria-hidden="true">
+          <div class="tl-pulse"></div>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-line" aria-hidden="true"></div>
+        <div class="glass-card tl-body">
+          <div class="tl-top">
+            <div>
+              <h3>Summer Trainee</h3>
+              <p class="tl-org">ITI — Beni Suef Branch</p>
+            </div>
+            <span class="tl-badge tl-training">Training</span>
+          </div>
+          <p class="tl-track">
+            AI &amp; Machine Learning Foundations · e-Learning Specialization
+          </p>
+          <ul class="tl-bullets">
+            <li>Implemented advanced machine learning techniques including classification, regression, and clustering.</li>
+            <li>Structured and delivered collaborative technical projects within a team environment.</li>
+            <li>Deepened expertise in e-Learning tooling and AI-assisted educational workflows.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Freelance -->
+      <article class="tl-item reveal" data-d="240">
+        <div class="tl-node" aria-hidden="true">
+          <div class="tl-pulse"></div>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="glass-card tl-body">
+          <div class="tl-top">
+            <div>
+              <h3>Freelance AI &amp; Data Consultant</h3>
+              <p class="tl-org">Independent Professional</p>
+            </div>
+            <span class="tl-badge tl-freelance">Freelance</span>
+          </div>
+          <p class="tl-track">
+            Mostaql · Khamsat · Kafiil · Nafezly
+          </p>
+          <ul class="tl-bullets">
+            <li>Delivered end-to-end machine learning models and data analysis solutions for clients across multiple platforms.</li>
+            <li>Maintained structured, well-documented GitHub repositories for every project deliverable.</li>
+            <li>Built dynamic Streamlit applications enabling clients to interact with trained models intuitively.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── SERVICES ─────────────────────── -->
+<section class="section svc-sec" id="services">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 05 — OFFERINGS</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">How I Help</span>
+      <h2 class="sec-title"><span class="grad-text">Services</span> &amp; Solutions</h2>
+      <p class="sec-sub">End-to-end capabilities at your disposal</p>
+    </header>
+
+    <div class="svc-grid">
+
+      <article class="glass-card svc-card reveal" data-d="0">
+        <div class="svc-num" aria-hidden="true">01</div>
+        <div class="svc-icon" aria-hidden="true">🧠</div>
+        <h3>End-to-End ML Solutions</h3>
+        <p>Full machine learning lifecycle: data preprocessing, feature engineering,
+           predictive modeling (classification &amp; regression), and model deployment via Streamlit.</p>
+        <div class="svc-tags">
+          <span class="tag">Python</span><span class="tag">Scikit-Learn</span><span class="tag">Streamlit</span>
+        </div>
+      </article>
+
+      <article class="glass-card svc-card reveal" data-d="100">
+        <div class="svc-num" aria-hidden="true">02</div>
+        <div class="svc-icon" aria-hidden="true">📊</div>
+        <h3>Data Analysis &amp; Dashboards</h3>
+        <p>Deep exploratory data analysis paired with custom <strong>Power BI</strong> and
+           <strong>Excel</strong> dashboards for real-time KPI monitoring and executive reporting.</p>
+        <div class="svc-tags">
+          <span class="tag">Power BI</span><span class="tag">Excel</span><span class="tag">EDA</span>
+        </div>
+      </article>
+
+      <article class="glass-card svc-card reveal" data-d="200">
+        <div class="svc-num" aria-hidden="true">03</div>
+        <div class="svc-icon" aria-hidden="true">🧹</div>
+        <h3>Data Cleaning &amp; Preparation</h3>
+        <p>Transform messy, inconsistent datasets into clean, analysis-ready formats
+           optimised for downstream ML pipelines and BI tools.</p>
+        <div class="svc-tags">
+          <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Preprocessing</span>
+        </div>
+      </article>
+
+      <article class="glass-card svc-card reveal" data-d="300">
+        <div class="svc-num" aria-hidden="true">04</div>
+        <div class="svc-icon" aria-hidden="true">📁</div>
+        <h3>Repo &amp; Code Documentation</h3>
+        <p>Well-structured, annotated <strong>Jupyter Notebooks</strong>, clean Python modules,
+           and professional GitHub repositories that communicate intent clearly to any audience.</p>
+        <div class="svc-tags">
+          <span class="tag">Jupyter</span><span class="tag">GitHub</span><span class="tag">Documentation</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── CAREER OBJECTIVE ─────────────────────── -->
+<section class="section obj-sec" id="objective">
+  <div class="container">
+    <div class="obj-wrap reveal">
+      <div class="obj-ring r1" aria-hidden="true"></div>
+      <div class="obj-ring r2" aria-hidden="true"></div>
+      <div class="glass-card obj-card">
+        <span class="eyebrow">Mission Statement</span>
+        <h2 class="obj-title">Career <span class="grad-text">Objective</span></h2>
+        <blockquote class="obj-quote">
+          "To leverage cutting-edge artificial intelligence and machine learning
+          methodologies to solve real-world problems, optimize decision-making
+          processes, and deliver scalable end-to-end intelligent systems."
+        </blockquote>
+        <div class="obj-meta">
+          <span>🎯</span>
+          <span>Sara Ghaleb Azab Ghaleb</span>
+          <span aria-hidden="true">·</span>
+          <span>AI &amp; ML Engineer</span>
+          <span aria-hidden="true">·</span>
+          <span>Beni Suef, Egypt</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── CERTIFICATES ─────────────────────── -->
+<section class="section certs-sec" id="certificates">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 07 — CREDENTIALS</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">Achievements</span>
+      <h2 class="sec-title">My <span class="grad-text">Certificates</span></h2>
+      <p class="sec-sub">Verified skills and completed programmes</p>
+    </header>
+
+    <!-- Mascot: Certificates — celebrating pose -->
+    <div class="mascot-cert-scene reveal" data-d="0" aria-hidden="true">
+      <div class="cert-confetti" id="certConfetti" aria-hidden="true">
+        <span class="conf" style="--cx:10%;--cd:0s;--cc:#00d4ff"></span>
+        <span class="conf" style="--cx:20%;--cd:.2s;--cc:#8b5cf6"></span>
+        <span class="conf" style="--cx:35%;--cd:.1s;--cc:#22c55e"></span>
+        <span class="conf" style="--cx:50%;--cd:.3s;--cc:#f59e0b"></span>
+        <span class="conf" style="--cx:65%;--cd:.05s;--cc:#00d4ff"></span>
+        <span class="conf" style="--cx:78%;--cd:.25s;--cc:#8b5cf6"></span>
+        <span class="conf" style="--cx:90%;--cd:.15s;--cc:#f43f5e"></span>
+        <span class="conf" style="--cx:42%;--cd:.4s;--cc:#06b6d4"></span>
+      </div>
+      <div class="cert-mascot-wrap">
+        <img src="img/mascot.jpg"
+             alt="Mascot celebrating achievement"
+             class="mascot-img mascot-celebrate" />
+        <div class="cert-speech-bubble">
+          I earned these! 🎓✨<br>
+          <small>"Small Steps, Big Models"</small>
+        </div>
+        <div class="cert-star s1" aria-hidden="true">⭐</div>
+        <div class="cert-star s2" aria-hidden="true">✨</div>
+        <div class="cert-star s3" aria-hidden="true">🌟</div>
+      </div>
+    </div>
+
+    <!-- Certificate Cards Grid — 4 real certificates -->
+    <div class="certs-grid">
+
+      <!-- ══ Certificate 1: Switch Code — UI/UX ══ -->
+      <article class="glass-card cert-card reveal" data-d="0">
+        <!-- Thumbnail Preview -->
+        <div class="cert-preview" role="img"
+             aria-label="Switch Code UI/UX certificate preview"
+             style="--cert-bg: url('img/certs/cert-switchcode.jpg')">
+          <img src="img/certs/cert-switchcode.jpg"
+               alt="Switch Code UI/UX Certificate — Sara Ghaleb Azab Ghaleb"
+               class="cert-thumb"
+               loading="lazy" />
+          <button class="cert-zoom-btn" data-img="img/certs/cert-switchcode.jpg"
+                  data-name="UI/UX Introductory Session — Switch Code"
+                  aria-label="View full certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              <path d="M11 8v6M8 11h6"/>
+            </svg>
+          </button>
+          <div class="cert-ribbon" aria-hidden="true">VERIFIED</div>
+        </div>
+        <!-- Body -->
+        <div class="cert-card-body">
+          <p class="cert-issuer">Switch Code</p>
+          <h3 class="cert-title">UI/UX Introductory Session</h3>
+          <p class="cert-desc">
+            Attended the introductory session on UI/UX Design — gained insights into
+            the field, its importance, key skills in the training track, and differences
+            between related roles.
+          </p>
+          <div class="cert-meta">
+            <span class="cert-date">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Aug 19–21, 2025
+            </span>
+            <div class="cert-tags">
+              <span class="tag">UI/UX</span>
+              <span class="tag">Design</span>
+            </div>
+          </div>
+        </div>
+        <!-- Actions -->
+        <div class="cert-card-actions">
+          <a href="img/certs/cert-switchcode.jpg"
+             class="btn btn-primary cert-btn"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="View Switch Code UI/UX certificate">
+            <span class="btn-sweep" aria-hidden="true"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/></svg>
+            View
+          </a>
+          <a href="img/certs/cert-switchcode.jpg"
+             class="btn btn-ghost cert-btn"
+             download="Sara_Ghaleb_SwitchCode_UIUX.jpg"
+             aria-label="Download Switch Code UI/UX certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <!-- ══ Certificate 2: Cisco — Cybersecurity ══ -->
+      <article class="glass-card cert-card reveal" data-d="120">
+        <div class="cert-preview" role="img"
+             aria-label="Cisco Cybersecurity certificate preview">
+          <img src="img/certs/cert-cisco.jpg"
+               alt="Cisco Networking Academy — Introduction to Cybersecurity"
+               class="cert-thumb" loading="lazy" />
+          <button class="cert-zoom-btn" data-img="img/certs/cert-cisco.jpg"
+                  data-name="Introduction to Cybersecurity — Cisco Networking Academy"
+                  aria-label="View full certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              <path d="M11 8v6M8 11h6"/>
+            </svg>
+          </button>
+          <div class="cert-ribbon cert-ribbon-blue" aria-hidden="true">VERIFIED</div>
+        </div>
+        <div class="cert-card-body">
+          <p class="cert-issuer">Cisco Networking Academy</p>
+          <h3 class="cert-title">Introduction to Cybersecurity</h3>
+          <p class="cert-desc">
+            Achieved student-level credential for completing the <em>Introduction to
+            Cybersecurity</em> course — covering cyber threats, safe online practices,
+            and organizational security protection strategies.
+          </p>
+          <div class="cert-meta">
+            <span class="cert-date">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Oct 02, 2025
+            </span>
+            <div class="cert-tags">
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Cisco</span>
+            </div>
+          </div>
+        </div>
+        <div class="cert-card-actions">
+          <a href="img/certs/cert-cisco.jpg"
+             class="btn btn-primary cert-btn"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="View Cisco Cybersecurity certificate">
+            <span class="btn-sweep" aria-hidden="true"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/></svg>
+            View
+          </a>
+          <a href="img/certs/cert-cisco.jpg"
+             class="btn btn-ghost cert-btn"
+             download="Sara_Ghaleb_Cisco_Cybersecurity.jpg"
+             aria-label="Download Cisco certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <!-- ══ Certificate 3: IEEE Nahda University — Python ══ -->
+      <article class="glass-card cert-card reveal" data-d="240">
+        <div class="cert-preview" role="img"
+             aria-label="IEEE Nahda University Python certificate preview">
+          <img src="img/certs/cert-ieee.jpg"
+               alt="IEEE Nahda University — Certificate of Appreciation, Python Course 2026"
+               class="cert-thumb" loading="lazy" />
+          <button class="cert-zoom-btn" data-img="img/certs/cert-ieee.jpg"
+                  data-name="Python Course — IEEE Nahda University Student Branch"
+                  aria-label="View full certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              <path d="M11 8v6M8 11h6"/>
+            </svg>
+          </button>
+          <div class="cert-ribbon cert-ribbon-gold" aria-hidden="true">2026</div>
+        </div>
+        <div class="cert-card-body">
+          <p class="cert-issuer">IEEE Nahda University Student Branch</p>
+          <h3 class="cert-title">Certificate of Appreciation — Python Course</h3>
+          <p class="cert-desc">
+            Awarded a Certificate of Appreciation in recognition of successfully
+            completing the Python programming course — issued by IEEE Nahda University
+            Student Branch, 2026.
+          </p>
+          <div class="cert-meta">
+            <span class="cert-date">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2026
+            </span>
+            <div class="cert-tags">
+              <span class="tag">Python</span>
+              <span class="tag">IEEE</span>
+            </div>
+          </div>
+        </div>
+        <div class="cert-card-actions">
+          <a href="img/certs/cert-ieee.jpg"
+             class="btn btn-primary cert-btn"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="View IEEE Python certificate">
+            <span class="btn-sweep" aria-hidden="true"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/></svg>
+            View
+          </a>
+          <a href="img/certs/cert-ieee.jpg"
+             class="btn btn-ghost cert-btn"
+             download="Sara_Ghaleb_IEEE_Python.jpg"
+             aria-label="Download IEEE certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+      <!-- ══ Certificate 4: ITIDA / NTI — AI for Business ══ -->
+      <article class="glass-card cert-card cert-card-featured reveal" data-d="360">
+        <div class="cert-preview" role="img"
+             aria-label="ITIDA NTI AI for Business certificate preview">
+          <img src="img/certs/cert-itida.jpg"
+               alt="ITIDA / NTI — Certificate of Training, AI For Business, 93.5% score"
+               class="cert-thumb" loading="lazy" />
+          <button class="cert-zoom-btn" data-img="img/certs/cert-itida.jpg"
+                  data-name="AI For Business — ITIDA / NTI (Score: 93.5%)"
+                  aria-label="View full certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              <path d="M11 8v6M8 11h6"/>
+            </svg>
+          </button>
+          <div class="cert-ribbon cert-ribbon-red" aria-hidden="true">93.5%</div>
+          <div class="cert-score-badge" aria-label="Score 93.5%">
+            <span class="csb-val">93.5%</span>
+            <span class="csb-lbl">Score</span>
+          </div>
+        </div>
+        <div class="cert-card-body">
+          <p class="cert-issuer">ITIDA &amp; NTI — National Telecom Institute</p>
+          <h3 class="cert-title">AI For Business — Training Certificate</h3>
+          <p class="cert-desc">
+            Completed the summer training course <strong>AI For Business</strong> —
+            120 hours (90 technical + 30 freelancing). Issued jointly by ITIDA and NTI.
+            <span class="cert-highlight">Score: 93.5% · Student ID: 322438</span>
+          </p>
+          <div class="cert-meta">
+            <span class="cert-date">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/></svg>
+              28 Jun – 23 Jul 2026 · 120 hrs
+            </span>
+            <div class="cert-tags">
+              <span class="tag">AI</span>
+              <span class="tag">ITIDA</span>
+              <span class="tag">NTI</span>
+            </div>
+          </div>
+        </div>
+        <div class="cert-card-actions">
+          <a href="img/certs/cert-itida.jpg"
+             class="btn btn-primary cert-btn"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="View ITIDA AI for Business certificate">
+            <span class="btn-sweep" aria-hidden="true"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/></svg>
+            View
+          </a>
+          <a href="img/certs/cert-itida.jpg"
+             class="btn btn-ghost cert-btn"
+             download="Sara_Ghaleb_ITIDA_AI_For_Business.jpg"
+             aria-label="Download ITIDA certificate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+        </div>
+      </article>
+
+    </div><!-- /certs-grid -->
+
+    <!-- Add-more hint -->
+    <p class="certs-add-hint reveal" data-d="400">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      More certificates coming soon — each step forward is a new achievement!
+    </p>
+
+  </div>
+</section>
+
+<!-- ─────────────────────── CONTACT ─────────────────────── -->
+<section class="section contact-sec" id="contact">
+  <div class="world-tag" aria-hidden="true"><span>◈</span> ISLAND 06 — CONNECT</div>
+  <div class="container">
+
+    <header class="sec-head reveal">
+      <span class="eyebrow">Get in Touch</span>
+      <h2 class="sec-title">Let's <span class="grad-text">Connect</span></h2>
+      <p class="sec-sub">Transmit your project details — I'll respond swiftly</p>
+    </header>
+
+    <div class="contact-grid">
+
+      <!-- Info panel -->
+      <div class="reveal">
+        <div class="glass-card ct-info-card">
+          <h3>Let's Work Together</h3>
+          <p>Whether you need a predictive model, an interactive dashboard, or a complete
+             data pipeline — I'm ready to deliver high-quality results.</p>
+
+          <div class="ct-channels">
+            <a href="mailto:sartghalb13@gmail.com" class="ct-channel">
+              <div class="ct-ch-icon" aria-hidden="true">✉</div>
+              <div class="ct-ch-text">
+                <span class="ct-ch-label">Email</span>
+                <span>sartghalb13@gmail.com</span>
+              </div>
+            </a>
+            <div class="ct-channel">
+              <div class="ct-ch-icon" aria-hidden="true">📍</div>
+              <div class="ct-ch-text">
+                <span class="ct-ch-label">Location</span>
+                <span>Beni Suef, Egypt</span>
+              </div>
+            </div>
+            <a href="https://linkedin.com/in/sara-ghaleb-929b49352" target="_blank"
+               rel="noopener noreferrer" class="ct-channel">
+              <div class="ct-ch-icon" aria-hidden="true">💼</div>
+              <div class="ct-ch-text">
+                <span class="ct-ch-label">LinkedIn</span>
+                <span>sara-ghaleb-929b49352</span>
+              </div>
+            </a>
+            <a href="https://github.com/engsarona" target="_blank"
+               rel="noopener noreferrer" class="ct-channel">
+              <div class="ct-ch-icon" aria-hidden="true">🐙</div>
+              <div class="ct-ch-text">
+                <span class="ct-ch-label">GitHub</span>
+                <span>engsarona</span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Freelance platforms -->
+          <div class="ct-platforms">
+            <p class="ct-plat-label">Freelance Platforms</p>
+            <div class="ct-plat-row">
+              <a href="https://mostaql.com"  target="_blank" rel="noopener noreferrer" class="plat-pill">Mostaql</a>
+              <a href="https://khamsat.com"  target="_blank" rel="noopener noreferrer" class="plat-pill">Khamsat</a>
+              <a href="https://kafiil.com"   target="_blank" rel="noopener noreferrer" class="plat-pill">Kafiil</a>
+              <a href="https://nafezly.com"  target="_blank" rel="noopener noreferrer" class="plat-pill">Nafezly</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <form class="glass-card ct-form reveal" id="contactForm"
+            novalidate aria-label="Contact Sara Ghaleb">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cfName">Full Name</label>
+            <input type="text" id="cfName" name="name"
+                   placeholder="Your full name" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="cfEmail">Email Address</label>
+            <input type="email" id="cfEmail" name="email"
+                   placeholder="your@email.com" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cfSubject">Subject</label>
+          <input type="text" id="cfSubject" name="subject"
+                 placeholder="What's this about?" required />
+        </div>
+        <div class="form-group">
+          <label for="cfMessage">Message</label>
+          <textarea id="cfMessage" name="message" rows="5"
+                    placeholder="Describe your project or enquiry in detail…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="ctSubmit">
+          <span class="btn-sweep" aria-hidden="true"></span>
+          <span class="btn-lbl">Transmit Message</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+        <p class="form-note" id="formNote" aria-live="polite"></p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">SG<span class="accent-dot">.</span></div>
+    <p class="footer-copy">
+      &copy; <span id="year"></span> Sara Ghaleb Azab Ghaleb &nbsp;&middot;&nbsp;
+      AI &amp; Machine Learning Engineer &nbsp;&middot;&nbsp; Beni Suef, Egypt
+    </p>
+    <a href="#hero" class="footer-top" aria-label="Back to top">
+      Back to top
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
